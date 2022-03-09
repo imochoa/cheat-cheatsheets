@@ -1,0 +1,22 @@
+---
+syntax: bash
+tags: [ development, drawing ]
+---
+
+
+DRAWING CONTROLS
+            | Click | Red line
+ Shift      | Click | Green line
+ Ctrl       | Click | Blue line
+ Alt        | Click | Red highlighter
+ Alt+Shift  | Click | Green highlighter
+ Alt+Ctrl   | Click | Blue highlighter
+            | F10   | Undo
+Shift       | F10   | Redo
+
+
+PROGRAM CONTROLS
+Ctrl   | F9    | Toggle visibility ON/OFF
+       | F9    | Toggle drawing ON/OFF
+Shift  | F9    | Delete lines
+Alt    | F9    | Quit program

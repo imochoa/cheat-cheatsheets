@@ -1,0 +1,129 @@
+---
+syntax: bash
+tags: [ development, dotfiles ]
+---
+
+https://yadm.io/docs/common_commands
+
+# Display yadm’s manual.
+ man yadm
+
+# Show the repository status; added, changed, removed files. Because a $HOME directory often more than only dotfiles, by default yadm ignores untracked files when displaying status.
+ yadm status
+
+# Send or retrive commits to/from your remote repository .
+ yadm push, yadm fetch
+
+# Replace the last commit with a new one. Allows you to change your commit message or add staged changes to the previous commit.
+ yadm commit --amend
+
+# View changes (uncommitted) you’ve made to your dotfiles.
+ yadm diff
+
+# View changes staged with yadm add. These changes will be added with the next commit.
+ yadm diff --cached
+
+# Print a list of files managed by yadm. The -a option will cause all managed files to be listed. Otherwise, the list will only include files from the current directory or below.
+ yadm list -a
+
+# Create symbolic links for any managed files matching the alternate naming rules. Read about alternate files for more details.
+ yadm alt
+
+# Encrypt all files matching the patterns found in $HOME/.config/yadm/encrypt. Read about encryption for more details.
+ yadm encrypt
+
+# Decrypt files stored in $HOME/.config/yadm/files.gpg. Using the -l option will only list the files (without decrypting them). Read about encryption for more details.
+ yadm decrypt, yadm decrypt -l
+
+# Clone the repository from <URL>, and automatically run bootstrap if successful. Read about bootstrap for more details.
+ yadm clone --bootstrap <URL>
+
+# Display detailed information about all configured remote repositories.
+ yadm remote -v
+
+# Abandon local changes to <file>, replacing it with the HEAD revision of <file>.
+ yadm checkout -- <file>
+
+# Create a branch called <branch-name>, and check the branch out.
+ yadm checkout -b <branch-name>
+
+
+
+
+yadm list -a
+
+.config/shell/aliases
+.config/shell/functions
+
+.bashrc
+
+.config/bash/bash_aliases
+.config/bash/bash_functions
+.config/bash/bash_completion/
+
+.config/cheat/conf.yml
+
+.config/dunst/dunstrc
+
+.config/greenclip.toml
+
+.config/gromit-mpx.cfg
+.config/gromit-mpx.ini
+
+.config/gtk-2.0/
+.config/gtk-3.0/
+.config/gtk-4.0/
+
+.config/nvim/
+.config/nvim/UltiSnips/
+.config/nvim/after/
+
+.config/ranger/rc.conf
+
+.config/regolith/Xresources
+.config/regolith/i3/config
+
+.config/sxiv/exec/key-handler
+
+.config/xxh/config.xxhc
+
+.config/yadm/bootstrap
+.config/yadm/encrypt
+.config/yadm/files.gpg
+
+.zshenv
+.config/zsh/.zshrc
+.config/zsh/completions/_cheat.zsh
+.config/zsh/completions/_xxh.zsh
+.config/zsh/plugins/vim_keys_in_menu
+.config/zsh/plugins/vim_mode_cursor
+.config/zsh/zsh_functions
+
+.gitmodules
+
+.inputrc
+
+.local/bin/bat
+.local/bin/nvim_desktop_wrapper.py
+.local/bin/start-portainer
+.local/bin/stdjson
+.local/share/applications/neovim.desktop
+
+.pdbrc
+
+.profile
+
+
+
+GNOME TERMINAL:
+- [i3] 
+ - .config/regolith/Xresources
+
+
+
+# Adding submodules
+ I would expect that you have a tracked .gitmodules file,
+ and that you will need to do a yadm submodule init and 
+ a yadm submodule update after an initial clone.
+
+

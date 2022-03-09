@@ -1,0 +1,27 @@
+---
+syntax: bash
+tags: [ vim, dev ]
+---
+
+# Start a comparison:
+vim -d a.txt b.txt
+
+# Navigate changes
+]c # Next change
+[c # Previous change
+
+# Merge changes
+do # "diff obtain" change the CURRENT split
+dp # "diff put" change the OTHER split
+
+# Export HTML
+:[range]TOhtml
+      :10,40TOhtml " convert lines 10-40 to html
+      :'<,'>TOhtml " convert current/last visual selection
+      :TOhtml      " convert entire buffer
+
+:let html_use_css = 1 # To use CSS instead of all of the font tags
+
+:let *g:html_hover_unfold*
+
+ |g:html_dynamic_folds

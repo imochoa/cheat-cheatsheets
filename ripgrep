@@ -1,0 +1,12 @@
+---
+syntax: bash
+tags: [ search, files ]
+---
+
+# start detached
+
+-l, --files-with-matches
+
+-v, invert match?
+
+iglob

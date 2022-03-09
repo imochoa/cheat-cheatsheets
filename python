@@ -1,0 +1,72 @@
+---
+syntax: bash
+tags: [ CLI, trash ]
+---
+
+  
+# Basic example of server with python
+# Will start a Web Server in the current directory on port 8000
+# go to http://127.0.0.1:8000
+
+# Python v2.7
+python -m SimpleHTTPServer
+# Python 3
+python -m http.server 8000
+
+# SMTP-Server for debugging, messages will be discarded, and printed on stdout.
+python -m smtpd -n -c DebuggingServer localhost:1025
+
+# Pretty print a json
+python -m json.tool foo.json
+
+
+# Using PDB
+python -m pdb your_script.py
+-cc # Skip the initial stopping
+-c "b 8" # Set a breakpoint on line 8
+
+## Commands:
+b(reak) [[filename:]lineno | function[, condition]]
+
+
+DOES NOT WORK:
+	break myfile          # You need a lineno | function !
+
+Examples:
+	break myfile:200      # Break at on myfile at L200
+	break myfile cool_fcn # Break on cool_fcn in myfile
+
+## You have to import it first
+#
+# POOOOP: python -m pdb -c 'import other_pkg.other_script' -c 'b other_pkg/other_script your_fcn'  your_script.py
+#
+# Set a breakpoint on a module:lineno other_module:20
+python -m pdb -c 'import other_pkg.other_module ' -c 'b other_pkg/other_module:20'  your_script.py
+#                                 ^                              ^            ^ 
+#                                 ^                              ^            ^- '.py' is optional
+#                                 ^                              ^
+#                                 ^                              ^
+#                                 ^                              ^
+#                                 ^                              ^-------- '/' PATH SEPARATOR
+#                                 ^-------------------------------------- '.' PATH SEPARATOR
+#
+
+
+
+# Set a breakpoint on a function "your_fcn"
+python -m pdb -c 'from other_pkg.other_module import your_fcn' -c 'b your_fcn'  your_script.py
+#                               ^                             ^            ^ 
+#                               ^                             ^            ^- '.py' is optional
+#                               ^                             ^
+#                               ^                             ^
+#                               ^                             ^
+#                               ^                             ^-------- '/' PATH SEPARATOR
+#                               ^-------------------------------------- '.' PATH SEPARATOR
+#
+#
+#
+
+
+# pip install requirements.txt with comment
+grep -vE "^#" requirements.txt | xargs -n1 venv/bin/pip install
+

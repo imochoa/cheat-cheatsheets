@@ -1,0 +1,33 @@
+
+
+
+
+# Run without installing:
+pipx run APP [ARGS...] # from PyPi
+pipx run
+https://gist.githubusercontent.com/cs01/fa721a17a326e551ede048c5088f9e0f/raw/6bdfbb6e9c1132b1c38fdd2f195d4a24c540c324/pipx-demo.py
+# from a URL!
+pipx run --spec git+https://github.com/psf/black.git black # From master
+pipx run --spec git+https://github.com/psf/black.git@branch black  # branch of your choice
+pipx run --spec git+https://github.com/psf/black.git@ce14fa8b497bae2b50ec48b3bd7022573a59cdb1 black  # git hash
+pipx run --spec https://github.com/psf/black/archive/18.9b0.zip black # install a release
+
+# For example, cookiecutter
+pipx run cookiecutter gh:sourcery-ai/python-best-practices-cookiecutter
+
+
+
+# Install and run
+pipx install cookiecutter # from PyPi
+pipx install git+https://github.com/psf/black.git # From github master
+pipx install git+https://github.com/psf/black.git@branch  # branch of your choice
+pipx install git+https://github.com/psf/black.git@ce14fa8b497bae2b50ec48b3bd7022573a59cdb1  # git hash
+pipx install https://github.com/psf/black/archive/18.9b0.zip  # install a release
+
+# Running (just use normal approach)
+APP [ARGS...]
+
+# See what's installed:
+pipx list
+
+

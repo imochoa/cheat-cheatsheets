@@ -1,0 +1,7 @@
+---
+syntax: bash
+tags: [ development, files ]
+---
+
+# start detached
+docker-compose --file your-docker-compose.yaml up -d

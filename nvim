@@ -1,0 +1,151 @@
+---
+syntax: bash
+tags: [ development, editor ]
+---
+
+# minpac
+
+#     Updating
+PackUpdate\t"minpac#update()"
+PackClean\t"minpac#clean()"
+PackList\t
+
+# Variables
+let assigns a value to a variable
+set assigns a value to one of Vim's internal options.
+
+# See its value (even if not defined)
+:echo g:SuperTabDefaultCompletionType
+
+:help internal-variables
+                     (nothing)     In a function: local to a function; otherwise: global 
+         buffer-variable    b:     Local to the current buffer.                          
+         window-variable    w:     Local to the current window.                          
+         tabpage-variable   t:     Local to the current tab page.                        
+         global-variable    g:     Global.                                               
+         local-variable     l:     Local to a function.                                  
+         script-variable    s:     Local to a :source'ed Vim script.                     
+         function-argument  a:     Function argument (only inside a function).           
+         vim-variable       v:     Global, predefined by Vim.
+
+# Save without triggering the auto-format
+:noa w
+# To learn!
+
+
+Jumping around
+gx : go to URL
+gi : go to last insert position
+gf : go to file
+gd : go to (local) definition
+gD : go to (global) definition
+gv : reselect last selection
+
+
+\ze
+\zs
+
+
+Multiple cursors:
+<CMD-D><C-D>gb after a search
+
+
+" maximize current split or return to previous
+noremap <C-w>m :MaximizerToggle<CR>
+
+
+# Saving:
+:noa w - (noautocmd w)
+:wa – Write all unsaved buffers, but keep Vim open
+:xa or :wqa – Write all unsaved buffers, and close Vim
+:qa – Quit Vim but stop if there are unsaved buffers
+:qa! – Quit Vim and discard unsaved buffers
+
+# Insert mode mapping
+ctrl-h – Delete previous character (same as backspace)
+ctrl-w – Delete previous word
+ctrl-u – Delete entire line (except any indent)
+ctrl-t – Indent the current line
+ctrl-d – Backdent the current line
+
+# Folding
+
+za	toggle current fold open/closed
+
+zi	switch folding on or off
+za	toggle current fold open/closed
+zc	close current fold
+zR	open all folds
+zM	close all folds
+zv	expand folds to reveal cursor
+
+
+
+zf#j creates a fold from the cursor down # lines.
+zf/string creates a fold from the cursor to string .
+zj moves the cursor to the next fold.
+zk moves the cursor to the previous fold.
+zo opens a fold at the cursor.
+zO opens all folds at the cursor.
+zm increases the foldlevel by one.
+zM closes all open folds.
+zr decreases the foldlevel by one.
+zR decreases the foldlevel to zero -- all folds will be open.
+zd deletes the fold at the cursor.
+zE deletes all folds.
+[z move to start of open fold.
+]z move to end of open fold.
+
+# https://vimtricks.com/p/category/tips-and-tricks/
+
+# Mappings:
+<Leader>l " Highlight current line
+<Leader>c " Clear highlighted text (and current matches)
+
+
+# Replace across project
+:Ggrep Checks – Finds all the references in the project to "Checks", and load them into the quickfix list
+:cdo s/Checks/Balances/gc | update – Iterates over every result from the quickfix list and replaces all the references to “Checks” on the line with “Balances”. The c flag forces us to confirm each one and the update command writes the buffer after each.
+
+
+
+# Telescope
+--------------------------------------------------------------
+Mappings     	 Action
+--------------------------------------------------------------
+<C-n>/<Down> 	 Next item
+<C-p>/<Up>   	 Previous item
+j/k          	 Next/previous (in normal mode)
+H/M/L        	 Select High/Middle/Low (in normal mode)
+'gg/G'       	 Select the first/last item (in normal mode)
+<CR>         	 Confirm selection
+<C-x>        	 Go to file selection as a split
+<C-v>        	 Go to file selection as a vsplit
+<C-t>        	 Go to a file in a new tab
+<C-u>        	 Scroll up in preview window
+<C-d>        	 Scroll down in preview window
+<C-/>        	 Show mappings for picker actions (insert mode)
+?            	 Show mappings for picker actions (normal mode)
+<C-c>        	 Close telescope
+<Esc>        	 Close telescope (in normal mode)
+<Tab>        	 Toggle selection and move to next selection
+<S-Tab>      	 Toggle selection and move to prev selection
+<C-q>        	 Send all items not filtered to quickfixlist (qflist)
+<M-q>        	 Send all selected items to qflist
+
+
+# HOP
+--------------------------------------------------------------
+<Leader>$     go to word
+
+# Run macro "a" on all buffers
+--------------------------------------------------------------
+# Open files you're interested in (eg. all .py files)
+vim $(fd -epy)
+# Once inside, run
+:bufdo execute "normal @a" | write
+
+
+
+https://www.brianstorti.com/vim-as-the-poor-mans-sed/
+https://www.reddit.com/r/vim/comments/6z9i5j/example_of_vims_exmode_magic_that_can_make_you/

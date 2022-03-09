@@ -1,0 +1,64 @@
+---
+syntax: bash
+tags: [ development, files ]
+---
+
+# Get all dims
+inkscape --query-all logo.svg
+
+# Crop all SVGs:
+# https://shkspr.mobi/blog/2013/03/inkscape-cropping-svg-files-on-the-command-line/
+inkscape --verb=FitCanvasToDrawing --verb=FileSave --verb=FileClose *.svg
+
+# https://github.com/skagedal/svgclip
+inkscape --export-type=svg -o --export-area-drawing ./test.svg
+
+# https://inkscape.org/doc/inkscape-man100.html
+
+# Open an SVG file in the GUI:
+    inkscape filename.svg
+
+# Export an SVG file into PNG with the default resolution of 96 dpi (one SVG user unit translates to one bitmap pixel):
+    inkscape --export-filename=filename.png filename.svg
+
+# Same, but force the PNG file to be 600x400 pixels:
+    inkscape --export-filename=filename.png -w 600 -h 400 filename.svg
+
+# Same, but export the drawing (bounding box of all objects), not the page:
+    inkscape --export-filename=filename.png --export-area-drawing filename.svg
+
+# Export two different files into four distinct file formats each:
+    inkscape --export-type=png,ps,eps,pdf filename1.svg filename2.svg
+
+# Export to PNG the object with id="text1555", using the output filename and the resolution that were used for that object last time when it was exported from the GUI:
+    inkscape --export-id=text1555 --export-use-hints filename.svg
+
+# Same, but use the default 96 dpi resolution, specify the filename, and snap the exported area outwards to the nearest whole SVG user unit values (to preserve pixel-alignment of objects and thus minimize aliasing):
+    inkscape --export-id=text1555 --export-filename=text.png --export-area-snap filename.svg
+
+# Convert an Inkscape SVG document to plain SVG:
+    inkscape --export-plain-svg --export-filename=filename2.svg filename1.svg
+
+# Convert an SVG document to EPS, converting all texts to paths:
+    inkscape --export-filename=filename.eps --export-text-to-path filename.svg
+
+# Query the width of the object with id="text1555":
+    inkscape --query-width --query-id=text1555 filename.svg
+
+# Duplicate the objects with id="path1555" and id="rect835", rotate the duplicates 90 degrees, save SVG, and quit:
+    inkscape --select=path1555,rect835 --verb="EditDuplicate;ObjectRotate90;FileSave;FileQuit" filename.svg
+
+# Select all objects with ellipse tag, rotate them 30 degrees, save the file, and quit.
+    inkscape --actions="select-by-element:ellipse;transform-rotate:30;FileSave;FileClose" --batch-process filename.svg
+
+# Export the object with the ID MyTriangle with a semi transparent purple background to the file triangle_purple.png and with a red background to the file triangle_red.png.
+    inkscape --actions="export-id:MyTriangle; export-id-only; export-background:purple; export-background-opacity:0.5;export-filename:triangle_purple.png; export-do; export-background:red; export-background-opacity:1; export-filename:triangle_red.png" filename.svg
+
+# Read an SVG from standard input (stdin) and export it to PDF format:
+    cat filename.svg | inkscape --pipe --export-filename=filename.pdf
+
+# Export an SVG to PNG format and write it to standard output (stdout), then convert it to JPG format with ImageMagick's convert program:
+    inkscape --export-type=png --export-filename=- filename.svg | convert - filename.jpg
+
+# Same as above, but also reading from a pipe (--export-filename can be omitted in this case)
+    cat filename.svg | inkscape --pipe --export-type=png | convert - filename.jpg

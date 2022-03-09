@@ -1,0 +1,36 @@
+---
+syntax: python
+tags: [ CAD, programs ]
+---
+
+" ---------------------------------------------------- "
+" ------------------- General ------------------------ "
+" ---------------------------------------------------- "
+doc = App.getDocument('yourFreeCADDoc')
+
+" ---------------------------------------------------- "
+" ------------------- Debug -------------------------- "
+" ---------------------------------------------------- "
+
+" ---------------------------------------------------- "
+" ------------------- Part --------------------------- "
+" ---------------------------------------------------- "
+
+" ---------------------------------------------------- "
+" ------------------- Spreadsheets ------------------- "
+" ---------------------------------------------------- "
+sheet = doc.getObject('Spreadsheet')
+# See cells and aliases
+sheet.PropertiesList
+# Update values
+sheet.set("radius", str(radius)) # -> None
+sheet.recompute() # -> True/False
+# If you want to update the model geometry you also have to
+# to call touch() on each model object and then doc.recompute().
+
+
+" ---------------------------------------------------- "
+" ------------------- Headless-mode ------------------ "
+" ---------------------------------------------------- "
+import FreeCAD # <- Initializes the environment, it has to go first!
+import Part # <- 'Part.so' from /opt/FreeCAD/Mod/Part/

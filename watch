@@ -1,0 +1,16 @@
+---
+syntax: bash
+tags: [ development, files ]
+---
+
+# Run every 5 seconds, highlighting differences
+watch --interval 5 --differences cmd
+watch -n 5 -d cmd
+
+# Exit when the output changes
+watch --interval 5 --chgexit cmd
+watch -n 5 -g cmd
+
+# Using something besides the default "sh -c"
+watch --exec python -c 'print("hello!")'
+watch -x python -c 'print("hello!")'

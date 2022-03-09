@@ -1,0 +1,29 @@
+---
+syntax: bash
+tags: [ keyboard, utils ]
+---
+
+# Toggle beeps
+"progm + F8 (regular keys)"
+"progm + Shift + F8 (special keys)"
+
+# Power User Mode (PUM)
+"progm + Shift + Esc"
+
+# Opening/closing v-Drive
+"progm + F1 (PUM required)"
+
+# Status report
+"progm + Esc"
+
+# Model> Advantage2
+# Firmware> 1.0.431.us (4MB), 11/14/2017
+# Active layout file> qwerty.txt
+# Thumb keys mode> win
+# Macro play speed> off=0, slow=1, normal=3, fast=9> 3
+# Status report play speed> off=0, slow=1, normal=3, fast=4> 3
+# Keyclick status> on
+# Toggle tone status> on
+# Stored macros> 0
+# Keys remapped> 0
+# Power user mode> on

@@ -1,0 +1,10 @@
+---
+syntax: bash
+tags: [ install, programs ]
+---
+
+# Colors in terminal:
+# https://stackoverflow.com/questions/49503805/echo-command-color-not-working
+COLOR_REST="$(tput sgr0)"
+COLOR_GREEN="$(tput setaf 2)"
+printf '%s%s%s\n' $COLOR_GREEN 'OK' $COLOR_REST
