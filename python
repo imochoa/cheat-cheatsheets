@@ -38,7 +38,7 @@ Examples:
 
 ## You have to import it first
 #
-# POOOOP: python -m pdb -c 'import other_pkg.other_script' -c 'b other_pkg/other_script your_fcn'  your_script.py
+# NOT GREAT: python -m pdb -c 'import other_pkg.other_script' -c 'b other_pkg/other_script your_fcn'  your_script.py
 #
 # Set a breakpoint on a module:lineno other_module:20
 python -m pdb -c 'import other_pkg.other_module ' -c 'b other_pkg/other_module:20'  your_script.py

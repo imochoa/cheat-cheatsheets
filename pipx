@@ -1,6 +1,12 @@
+---
+syntax: bash
+tags: [ install, programs ]
+---
 
-
-
+# Installing versions in parallel using suffixes
+pipx install poetry
+pipx install --suffix 120 poetry==1.2.0a2
+pipx install --suffix 1aa4d5b git+https://github.com/python-poetry/poetry.git@1aa4d5b
 
 # Run without installing:
 pipx run APP [ARGS...] # from PyPi

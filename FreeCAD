@@ -34,3 +34,14 @@ sheet.recompute() # -> True/False
 " ---------------------------------------------------- "
 import FreeCAD # <- Initializes the environment, it has to go first!
 import Part # <- 'Part.so' from /opt/FreeCAD/Mod/Part/
+
+
+" ---------------------------------------------------- "
+" ---------------- better interpreter ---------------- "
+" ---------------------------------------------------- "
+
+freecad -c
+import readline # make the delete key functional
+import pprint   # format output easier to read 
+import fancycompleter # command completion
+fancycompleter.interact(persist_history=True)
