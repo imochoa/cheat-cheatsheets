@@ -1,6 +1,20 @@
 ---
 tags: [ vcs ]
 ---
+
+# ----------------------------------------------------------------------------------------------- #
+# Managing Git
+# ----------------------------------------------------------------------------------------------- #
+
+# Find what branches contain a commit hash
+git branch --contains 78f2aa315b1236227e87069ddc2dff1d20c793b3
+
+
+
+# ----------------------------------------------------------------------------------------------- #
+# Config
+# ----------------------------------------------------------------------------------------------- #
+
 # To set your identity:
 git config --global user.name <name>
 git config --global user.email <email>
@@ -10,6 +24,19 @@ git config --global core.editor <editor>
 
 # To enable color:
 git config --global color.ui true
+
+# The GPG key used for signing your commits
+git config --global user.signingkey 0A46826A
+
+# Defined the key to use for signing commits
+git config user.signingkey [KEYID]
+
+# Set signing of commits globally
+git config --global commit.gpgsign true
+
+# ----------------------------------------------------------------------------------------------- #
+# Commit/Stash
+# ----------------------------------------------------------------------------------------------- #
 
 # To stage all changes for commit:
 git add --all
@@ -51,6 +78,10 @@ git filter-branch --env-filter \
          export GIT_COMMITTER_DATE="Sat May 19 01:01:01 2007 -0700"
      fi'
 
+# ----------------------------------------------------------------------------------------------- #
+# Reset/Revert
+# ----------------------------------------------------------------------------------------------- #
+
 # To remove staged and working directory changes:
 git reset --hard
 
@@ -70,6 +101,12 @@ git clean -f -d
 
 # To remove untracked and ignored files:
 git clean -f -d -x
+
+
+# ----------------------------------------------------------------------------------------------- #
+# Push & Tag commits
+# ----------------------------------------------------------------------------------------------- #
+
 
 # To push to the tracked master branch:
 git push origin master
@@ -91,6 +128,10 @@ git tag -d <tagname>
 
 # To force a push:
 git push -f
+
+# ----------------------------------------------------------------------------------------------- #
+# Branches
+# ----------------------------------------------------------------------------------------------- #
 
 # Branches: To delete the branch <branch>:
 git branch -D <branch>
@@ -192,9 +233,6 @@ git cherry-pick <commit SHA1>
 # Change author of a commit 
 git commit --amend --author="Author Name <email@address.com>"
 
-# The GPG key used for signing your commits
-git config --global user.signingkey 0A46826A
-
 # Sign new tags
 git tag -s v1.5 -m 'my signed 1.5 tag'
 
@@ -204,11 +242,6 @@ git commit -a -S -m 'Signed commit'
 # check any signatures it finds and list them in its output
 git log --pretty="format:%h %G? %aN %s"
 
-# Defined the key to use for signing commits
-git config user.signingkey [KEYID]
-
-# Set signing of commits globally
-git config --global commit.gpgsign true
 
 
 # See last commit for these files:

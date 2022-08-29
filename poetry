@@ -1,0 +1,148 @@
+---
+syntax: bash
+tags: [ python, deps ]
+---
+
+# Installation
+Don't use pip, instead: 
+```shell
+# https://github.com/python-poetry/poetry/issues/6221
+# Use:
+curl -sSL https://install.python-poetry.org | python3 -
+# Instead of:
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+```
+
+## Updating poetry
+poetry self update
+
+
+# Starting out
+
+## ... from scratch
+poetry new my-project
+
+## ... without a pyproject.toml file
+poetry init
+
+## ... with an exiting pyproject.toml file
+poetry install
+
+# Configuration
+
+## Through environment variables
+
+ENV 
+  POETRY_VERSION=$POETRY_VERSION \
+  POETRY_HOME="/opt/poetry" \
+  POETRY_NO_INTERACTION=1 \
+  POETRY_VIRTUALENVS_IN_PROJECT=true
+
+## Through command line
+
+### See config
+poetry config --list
+
+### Set a value
+poetry config virtualenvs.in-project false
+
+### Reset a value
+poetry config virtualenvs.in-project --unset
+
+### Get path to venv
+POETRY_VENV=$(poetry show -v | grep virtualenv | cut -d" " -f3) \
+
+# Dependencies
+poetry lock --no-update
+
+## Update package(s)
+poetry update
+poetry update <package> ...
+
+## Add deps
+poetry add <package> <package>@latest
+poetry add -D flake8 black isort pytest pytest-cov mypy types-requests
+poetry add git+https://github.com/sdispater/pendulum.git#develop
+poetry add git+ssh://git@github.com/sdispater/pendulum.git#2.0.5
+poetry add ./my-package/ ../my-package-2/
+poetry add "<package>[<extra>]"
+
+## Editable mode
+```toml
+[tool.poetry.dependencies]
+my-package = {path = "../my/path", develop = true}
+```
+
+## Scripts
+```toml
+[tool.poetry.scripts]
+my-script = "my_module:main"
+```
+poetry run my-script
+
+
+## Remove package
+poetry remove <package>
+
+## Show packages & venv info
+poetry show
+
+
+## Remove old dependencies no longer present in the lock file
+poetry install --remove-untracked
+
+## Regenerate lock
+poetry lock --no-update
+
+## Not sure what's going on?
+-Delete .venv folder
+-poetry cache clear --all .
+-poetry lock --no-update
+-poetry install
+
+# Virtual environment
+For Poetry to identify that the folder is indeed a Poetry project, it has to have a pyproject.toml file.
+
+## Create a new virtual environment in the current project.
+poetry env use $(which python3)
+
+## Find the list of virtual environments including its full path.
+poetry env list --full-path
+
+## Remove a virtual environment. The last part of the command is the name of the virtual environment.
+poetry env remove project-edtXRBsn-py3.7
+
+## Get the path to the current active Python interpreter.
+poetry run which python3
+
+## Activating the current virtual environment.
+poetry shell
+
+source /path/to/python3.7/bin/activate
+
+> Take note, this is also similar to manually type the Python path.
+> source $(dirname $(poetry run which python3))/activate
+
+# Poetry Creating A Package & Versioning
+
+## Create a package in wheel format.
+poetry build
+poetry build --format wheel
+
+## Update the alpha version of the next release number.
+poetry version prerelease
+
+## Update the patch version of the next release number. Check out more version examples.
+poetry version patch
+
+# Install Poetry Dependencies For A Release
+## Once you are ready to package and release your application, Poetry has a way to install all dependencies excluding the ones for Development.
+poetry install --no-dev
+
+## In automated deployment you will need to disable any interactive questions that could keep the installation into a pause.
+poetry install -n
+
+
+## Publish package
+poetry publish
+

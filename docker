@@ -53,3 +53,11 @@ jq might be easier
 Rather than remember the syntax of these, json with jq can be much easier. 
 as in docker image ls --format="{{json .}}" | jq 'select( (.Tag=="latest") or (.Tag="<none>"))'. 
 You can use --format="{{json .}}" with the other docker ls commands.
+
+
+# Alpine
+# create a new user with an entrypoint.sh
+# https://gitlab.com/manuel_wagesreither/bora-proj/-/blob/master/docker/entrypoint.sh
+#
+# another example
+# https://github.com/miy4/docker-plantuml/blob/98f572943040d36896511c3a4327a1aba1a4e6ff/entrypoint

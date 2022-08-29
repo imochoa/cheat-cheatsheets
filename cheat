@@ -3,6 +3,10 @@ syntax: bash
 tags: [ util, help ]
 ---
 
+https://github.com/cheat/cheat
+
+# Original
+
 # To see example usage of a program:
 cheat <command>
 
@@ -20,4 +24,70 @@ cheat -v
 
 # Possible syntax values
 # https://github.com/cheat/cheat
-#
+
+
+# My additions
+
+
+# Command to update community sheets?
+
+# Diff between community & personal sheets?
+
+# Syntax values?
+
+cheat uses chroma for syntax highlighting, the possible "syntax" values
+are specified in: https://github.com/alecthomas/chroma/tree/master/styles 
+as of 2022/08/24, they are:
+- abap
+- algol
+- algol_nu
+- api
+- arduino
+- autumn
+- average
+- base16-snazzy
+- borland
+- bw
+- colorful
+- doom-one
+- doom-one2
+- dracula
+- emacs
+- friendly
+- fruity
+- github
+- github-dark
+- gruvbox
+- hr_dark
+- hr_high_contrast
+- igor
+- lovelace
+- manni
+- monokai
+- monokailight
+- murphy
+- native
+- nord
+- onesenterprise
+- paraiso-dark
+- paraiso-light
+- pastie
+- perldoc
+- pygments
+- rainbow_dash
+- rrt
+- solarized-dark
+- solarized-dark256
+- solarized-light
+- swapoff
+- tango
+- trac
+- vim
+- vs
+- vulcan
+- witchhazel
+- xcode
+- xcode-dark
+
+# Markdown rendering?
+cheat foo | some-markdown-formatter
