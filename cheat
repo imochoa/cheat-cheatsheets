@@ -91,3 +91,8 @@ as of 2022/08/24, they are:
 
 # Markdown rendering?
 cheat foo | some-markdown-formatter
+#
+
+
+
+cheat poetry | rich -m  -

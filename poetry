@@ -60,6 +60,40 @@ poetry update
 poetry update <package> ...
 
 ## Add deps
+# Regenerate lock
+```
+poetry lock --no-update
+```
+
+# New package
+```
+poetry new my-package
+```
+
+# Init project
+```
+poetry init
+```
+
+# Install project
+```
+poetry install
+poetry install --no-dev
+```
+
+# Remove old dependencies no longer present in the lock file
+```
+poetry install --remove-untracked
+```
+
+# Update package(s)
+```
+poetry update
+poetry update <package> ...
+```
+
+# Add deps
+```
 poetry add <package> <package>@latest
 poetry add -D flake8 black isort pytest pytest-cov mypy types-requests
 poetry add git+https://github.com/sdispater/pendulum.git#develop
@@ -68,12 +102,39 @@ poetry add ./my-package/ ../my-package-2/
 poetry add "<package>[<extra>]"
 
 ## Editable mode
+```
+
+# Editable mode
 ```toml
 [tool.poetry.dependencies]
 my-package = {path = "../my/path", develop = true}
 ```
 
 ## Scripts
+# Remove package
+poetry remove <package>
+
+# Show packages
+poetry show
+
+# Build source and wheels
+poetry build
+
+# Publish package
+poetry publish
+
+## Disable package publishing
+https://stackoverflow.com/a/71669250/11603367
+https://pypi.org/classifiers/
+```
+[tool.poetry]
+classifiers = ["Private :: Do not Upload"]
+```
+
+# Run commands
+poetry run python -v
+
+# Scripts
 ```toml
 [tool.poetry.scripts]
 my-script = "my_module:main"
@@ -146,3 +207,8 @@ poetry install -n
 ## Publish package
 poetry publish
 
+# Shell
+poetry shell
+
+
+# vim:set ft=markdown:

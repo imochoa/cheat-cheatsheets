@@ -106,3 +106,7 @@ ctrl-o
 
 # Super search
 ctrl-p
+
+# Modelines
+
+# vim:set ft=dockerfile:
