@@ -109,4 +109,21 @@ ctrl-p
 
 # Modelines
 
-# vim:set ft=dockerfile:
+## For different file types:
+
+`vim:set ft=dockerfile:`
+
+## For folding
+
+`vim:fdm=marker:fen:fdl=0:`
+
+Example:
+```
+# {{{1 Some title
+# |  {{{1 Sub level 1
+# |  |  {{{1 Sub-sub level 1
+# |  {{{1 Sub level 2
+# |  |  {{{1 Sub-sub level 1
+# |  |  {{{1 Sub-sub level 2
+```
+

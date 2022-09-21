@@ -211,4 +211,18 @@ poetry publish
 poetry shell
 
 
+
+
+
+
+
+
+
+
+
+
+
+poetry export --without-hashes > /tmp/doc-requirements.txt
+
+
 # vim:set ft=markdown:

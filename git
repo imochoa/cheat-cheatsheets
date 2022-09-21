@@ -233,6 +233,9 @@ git cherry-pick <commit SHA1>
 # Change author of a commit 
 git commit --amend --author="Author Name <email@address.com>"
 
+# The GPG key used for signing your commits
+git config --global user.signingkey 0A46826A
+
 # Sign new tags
 git tag -s v1.5 -m 'my signed 1.5 tag'
 
@@ -242,7 +245,29 @@ git commit -a -S -m 'Signed commit'
 # check any signatures it finds and list them in its output
 git log --pretty="format:%h %G? %aN %s"
 
+# Defined the key to use for signing commits
+git config user.signingkey [KEYID]
+
+# Set signing of commits globally
+git config --global commit.gpgsign true
 
 
 # See last commit for these files:
 ls *.csv | xargs -I@ bash -c 'D=$(git log -1 --format=%cd @) && echo "$D --> @"'
+
+# Reset repo
+git reset --hard HEAD 
+git clean -fdx
+# 2 FILES WILL BE DIFFRENT AFTER RUNNING THIS THOUGH!
+# - .git/index
+# - .git/logs/HEAD
+
+# File from another branch
+git checkout experiment -- app.js 
+
+
+# Submodules
+```shell
+git submodule update --init --recursive # Get the info
+git submodule update --remote # Update their commits
+```
