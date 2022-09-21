@@ -1,0 +1,16 @@
+---
+syntax: bash
+tags: [ pdf, svg, uml, plantuml ]
+---
+
+
+# PDF Export `.puml -> .pdf`
+
+```shell
+plantuml -tsvg /path/to/input.puml # PUML -> SVG 
+inkscape --export-pdf=output.pdf /path/to/input.svg # SVG -> PDF
+```
+
+
+
+# vim:set ft=markdown:
