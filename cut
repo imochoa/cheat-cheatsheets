@@ -1,0 +1,29 @@
+# To cut out the third field of text or stdoutput that is delimited by a #:
+cut -d# -f3
+
+# If you want to use any number of spaces as the separator
+tr -s ' ' | cut -d ' ' -f 2
+
+# To cut multiple fields
+## until field 8
+cut -d, -f-8
+
+## after field 8
+cut -d, -f8-
+
+## To skip both 5 and 7, try:
+cut -d, -f-4,6-6,8-
+
+## As you're skipping a single sequential column, this can also be written as:
+cut -d, -f-4,6,8-
+
+## To keep it going, if you wanted to skip 5, 7, and 11, you would use:
+cut -d, -f-4,6-6,8-10,12-
+
+## To put it into a more-clear perspective, it is easier to visualize when you use starting/ending columns which go on the beginning/end of the sequence list, respectively. For instance, the following will print columns 2 through 20, skipping columns 5 and 11:
+## So, this will print "2 through 4", skip 5, "6 through 10", skip 11, and then "12 through 20".
+cut -d, -f2-4,6-10,12-20
+
+
+# To cut all except some fields
+cut -d, --complement -f3,7,12

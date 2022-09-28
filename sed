@@ -16,6 +16,9 @@ sed '/^$/d' <file>
 # To replace newlines in multiple lines:
 sed ':a;N;$!ba;s/\n//g' <file>
 
+# To replace an entire line:
+sed "s/aaa=.*/aaa=xxx/g"
+
 # To insert a line before a matching pattern:
 sed '/Once upon a time/i\Chapter 1'
 
@@ -24,6 +27,9 @@ sed '/happily ever after/a\The end.'
 
 # To remove the line and print the output to standard out:
 sed '/pattern to match/d' ./infile
+
+# To remove all non-matching lines and print the output to standard out:
+sed '/pattern to match/!d' ./infile
 
 # To directly modify the file – does not work with BSD sed:
 sed -i '/pattern to match/d' ./infile

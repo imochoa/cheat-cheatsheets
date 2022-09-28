@@ -1,9 +1,14 @@
 # Manual 
 'https://stedolan.github.io/jq/manual/'
+
 # Tutorial
 'https://stedolan.github.io/jq/tutorial/'
+
 # Cookbook
 'https://github.com/stedolan/jq/wiki/Cookbook'
+
+#Cheatsheet
+https://gist.github.com/olih/f7437fb6962fb3ee9fe95bda8d2c8fa4
 
 # Command man page: https://manpages.ubuntu.com/manpages/focal/man1/jq.1.html
 
@@ -26,6 +31,18 @@ jq '.[-2:]'
 # To merge JSON files
 jq --slurp '.[0] * .[1]' file1 file2
 
+
+# Sort array of objects by value(s)
+
+cat sample.json | jq -s -c 'sort_by(.first_name) | .[]'
+
+cat sample.json | jq -s -c 'sort_by(.first_name, .last_name) | .[]'
+
+# -s "slurp" all inputs into an array; apply filter to it
+# -c compact
+
+
+
 # merge duplicates with "add" (+)
 # (add is defined as def add: reduce .[] as $x (null; . + $x);, which iterates over the input array's/object's values and adds them. Object addition == merge.)
 jq --slurp add '.[0] * .[1]' file1 file2
@@ -47,6 +64,10 @@ docker image ls --format="{{json .}}" | jq '. | select(.CreatedAt<"'`date +%Y-%m
 docker image ls --format="{{json .}}" \
 | jq '. | select(.CreatedAt<"'`date +%Y-%m-%d --date="last month"`'") | select(.Tag|test("^bm_.*")) | .ID' \
 | xargs -I% docker image rm %
+
+
+# Delete oldeer messatge TODO
+docker image ls github/cadext* --format="{{json .}}"  | jq -s 'sort_by(.CreatedAt) | .[:-1] | .[] | select(.CreatedAt<"'`date +%Y-%m-%d --date="24 hours ago"`'") | .ID ' | xargs -I{} docker rmi {}
 
 # Combine date and 
 
