@@ -1,0 +1,15 @@
+---
+syntax: bash
+tags: [ nix, dev ]
+---
+
+# For `default.nix`
+nix-build
+
+# For `flake.nix`
+nix build
+
+# Specific package
+nix build .#docker
+
+

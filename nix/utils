@@ -1,0 +1,7 @@
+---
+syntax: bash
+tags: [ nix, dev ]
+---
+
+# Run formatter
+nix-shell --run "nixpkgs-fmt ."

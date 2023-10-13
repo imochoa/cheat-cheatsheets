@@ -1,0 +1,29 @@
+---
+syntax: bash
+tags: [ nix, dev ]
+---
+
+# Online at https://search.nix.gsc.io/
+
+# Show all packages in the nixpkgs flake:
+nix search nixpkgs
+
+# Show packages in the nixpkgs flake containing blender in its name or description:
+nix search nixpkgs blender
+
+# Search for packages underneath the attribute gnome3 in Nixpkgs:
+ nix search nixpkgs#gnome3 vala
+    
+# Show all packages in the flake in the current directory:
+ nix search
+
+# Search for Firefox or Chromium:
+nix search nixpkgs 'firefox|chromium'
+
+# Search for packages containing git and either frontend or gui:
+nix search nixpkgs git 'frontend|gui'
+
+# Search for packages containing neovim but hide ones containing either gui or python:
+nix search nixpkgs neovim --exclude 'python|gui'
+# or
+nix search nixpkgs neovim --exclude 'python' --exclude 'gui'
