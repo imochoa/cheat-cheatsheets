@@ -4,3 +4,11 @@
 # Basic style
 FMT='\e[1;34m%-6s\e[m\n'
 printf $FMT "Formatted string!"
+
+# Add newline
+printf "%s\n" "No need to put newline char at the end!"
+
+# Handle multiple strings
+printf "%s\n" "hello" "there"
+printf "\t> %s\n" "item 1" "item 2" "item 3"
+

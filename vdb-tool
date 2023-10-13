@@ -1,0 +1,6 @@
+    # STL -> VDB
+    vdb_tool -read cad_file_234900.stl -mesh2ls d=256 --write cad_file_234900.vdb config.txt
+
+    # closing (dilation, erosion) and removing the original grid
+    vdb_tool -read cad_file_234900.vdb -read cad_file_234900.vdb -close radius=10 -read cad_file_234900.vdb -difference vdb=1,0  -write closed.vdb && vdb_view closed.vdb
+    -segment!

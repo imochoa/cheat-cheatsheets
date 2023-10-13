@@ -1,0 +1,26 @@
+# Change a file's owner:
+chown <user> <file>
+
+# Change a file's owner and group:
+chown <user>:<group> <file>
+
+# Set user to match group value
+chown <user>: <file>
+
+# Set group to match user value
+chown :<group> <file>
+
+# Change a directory's owner recursively:
+# NOTE! CAREFUL WITH chown -R <user> <directory>
+# https://www.warp.dev/terminus/how-to-run-chmod-recursively
+find . -type d -print0 | xargs -0 chmod 755
+find . -type f -print0 | xargs -0 chmod 644
+
+# Alternatively, you can speed up the process using the {} + expression,
+# which will be replaced at runtime by as many file paths as possible for each execution of chown,
+# instead of one by one.
+find . -type d -exec sudo chmod 775 {} +
+find . -type f -exec sudo chmod 644 {} +
+
+# Change ownership to match another file:
+chown --reference=<reference-file> <file>

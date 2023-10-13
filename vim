@@ -1,5 +1,6 @@
 ---
-tags [ vim ]
+syntax: bash
+tags: [ vim, dev ]
 ---
 
 # File management
