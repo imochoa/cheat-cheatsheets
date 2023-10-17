@@ -65,3 +65,19 @@ You can use --format="{{json .}}" with the other docker ls commands.
 #
 # another example
 # https://github.com/miy4/docker-plantuml/blob/98f572943040d36896511c3a4327a1aba1a4e6ff/entrypoint
+    git push --set-upstream origin ALGO-2165_testing-improvements
+
+# Shallow git clone to a commit
+```
+git clone --depth=1 git@github.com:user/repo.git /outdir
+cd /outdir
+git fetch --depth 1 origin 41335a40d587145db0719af4a89a9e1dc3a86b5f
+git checkout FETCH_HEAD
+```
+# or
+```
+git init
+git remote add origin git@github.com:user/repo.git
+git fetch --depth 1 origin <commit>
+git checkout FETCH_HEAD
+```
