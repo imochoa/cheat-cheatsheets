@@ -1,0 +1,311 @@
+---
+syntax: bash
+tags: [ CLI, trash ]
+---
+
+
+# Better repr
+```python
+#!/usr/bin/env python3
+"""Example of a decorator that adds a method to a class.
+
+From Reuven Lerner's "Practical Decorators" talk at PyCon 2019.
+Reuven's courses, books, and newsletter are at https://lerner.co.il/
+https://youtu.be/MjHpMCIvwsY
+"""
+
+
+def fancy_repr(self):
+    return f"I'm a {type(self).__name__}, with vars {vars(self)}"
+
+
+def better_repr(c):
+    c.__repr__ = fancy_repr
+
+    return c
+
+
+@better_repr
+class Foo():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
+f = Foo(10, [10, 20, 30])
+print(f)
+```
+
+# Memoize
+```python
+#!/usr/bin/env python3
+
+"""Example of a decorator that memoizes based on a function's arguments.
+Note that if the args aren't hashable, or if kwargs is set, this cache
+doesn't really work well.  (See memoize2.py for how to handle that.)
+
+From Reuven Lerner's "Practical Decorators" talk at PyCon 2019.
+Reuven's courses, books, and newsletter are at https://lerner.co.il/
+https://youtu.be/MjHpMCIvwsY
+"""
+
+
+def memoize(func):
+    cache = {}
+
+    def wrapper(*args, **kwargs):
+        if args not in cache:
+            print(f"Caching NEW value for {func.__name__}{args}")
+            cache[args] = func(*args, **kwargs)
+        else:
+            print(f"Using OLD value for {func.__name__}{args}")
+
+        return cache[args]
+    return wrapper
+
+
+if __name__ == '__main__':
+    @memoize
+    def add(a, b):
+        print("Running add!")
+        return a + b
+
+    @memoize
+    def mul(a, b):
+        print("Running mul!")
+        return a * b
+
+    print(add(3, 7))
+    print(mul(3, 7))
+    print(add(3, 7))
+    print(mul(3, 7))
+```
+
+# Memoize v2
+```python
+#!/usr/bin/env python3
+"""Example of a decorator that memoizes based on a function's arguments.
+This version uses "pickle", along with both args and kwargs, for a more
+robust solution than memoize.py.
+
+From Reuven Lerner's "Practical Decorators" talk at PyCon 2019.
+Reuven's courses, books, and newsletter are at https://lerner.co.il/
+https://youtu.be/MjHpMCIvwsY
+"""
+
+import pickle
+
+
+def memoize(func):
+    cache = {}
+
+    def wrapper(*args, **kwargs):
+        t = (pickle.dumps(args),
+             pickle.dumps(kwargs))
+
+        if t not in cache:
+            print(f"Caching NEW value for {func.__name__}{args}")
+            cache[t] = func(*args, **kwargs)
+        else:
+            print(f"Using OLD value for {func.__name__}{args}")
+
+        return cache[t]
+    return wrapper
+
+
+if __name__ == '__main__':
+    @memoize
+    def add(a, b):
+        print("Running add!")
+        return a + b
+
+    @memoize
+    def mul(a, b):
+        print("Running mul!")
+        return a * b
+
+    @memoize
+    def mysum(numbers, **kwargs):
+        print(f"Running mysum, message = '{kwargs.get('message')}'")
+        total = 0
+        for one_number in numbers:
+            total += one_number
+        return total
+
+    print(add(3, 7))
+    print(mul(3, 7))
+    print(add(3, 7))
+    print(mul(3, 7))
+    print(mysum([1, 2, 3, 4, 5], message='hello'))
+    print(mysum([1, 2, 3, 4, 5], message='hello'))
+    print(mysum([1, 2, 3, 4, 5], message='goodbye'))
+```
+
+# Object birthday
+```python
+#!/usr/bin/env python3
+"""Example of a decorator that adds a _created_at attribute to
+every instance created by the decorated class.
+
+From Reuven Lerner's "Practical Decorators" talk at PyCon 2019.
+Reuven's courses, books, and newsletter are at https://lerner.co.il/
+https://youtu.be/MjHpMCIvwsY
+"""
+
+import time
+
+
+def object_birthday(c):
+    def wrapper(*args, **kwargs):
+        o = c(*args, **kwargs)
+        o._created_at = time.time()
+        return o
+    return wrapper
+
+
+@object_birthday
+class Foo():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
+f = Foo(10, [10, 20, 30])
+print(f)
+print(f._created_at)
+```
+
+# Once per minute
+```python
+#!/usr/bin/env python3
+"""Example of a decorator that ensures a function cannot be run
+more than once every 60 seconds.  If such run is attempted, the function
+raises a CalledTooOftenError exception.
+
+From Reuven Lerner's "Practical Decorators" talk at PyCon 2019.
+Reuven's courses, books, and newsletter are at https://lerner.co.il/
+https://youtu.be/MjHpMCIvwsY
+"""
+
+import time
+
+
+class CalledTooOftenError(Exception):
+    pass
+
+
+def once_per_minute(func):
+    last_invoked = 0
+
+    def wrapper(*args, **kwargs):
+        nonlocal last_invoked
+
+        elapsed_time = time.time() - last_invoked
+        if elapsed_time < 60:
+            raise CalledTooOftenError(f"Only {elapsed_time} has passed")
+
+        last_invoked = time.time()
+
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+if __name__ == '__main__':
+    @once_per_minute
+    def add(a, b):
+        return a + b
+
+    print(add(2, 2))
+    print(add(3, 3))
+```
+
+# Once per n
+```python
+#!/usr/bin/env python3
+"""Example of a decorator that ensures a function cannot be run
+more than once every n seconds, where n is passed to the decorator
+as an argument.
+
+From Reuven Lerner's "Practical Decorators" talk at PyCon 2019.
+Reuven's courses, books, and newsletter are at https://lerner.co.il/
+https://youtu.be/MjHpMCIvwsY
+"""
+
+import time
+
+
+class CalledTooOftenError(Exception):
+    pass
+
+
+def once_per_n(n):
+    def middle(func):
+        last_invoked = 0
+
+        def wrapper(*args, **kwargs):
+            nonlocal last_invoked
+
+            elapsed_time = time.time() - last_invoked
+            if elapsed_time < 60:
+                raise CalledTooOftenError(f"Only {elapsed_time} has passed")
+
+            last_invoked = time.time()
+
+            return func(*args, **kwargs)
+
+        return wrapper
+    return middle
+
+
+if __name__ == '__main__':
+    @once_per_n(5)
+    def slow_add(a, b):
+        time.sleep(3)
+        return a + b
+
+    print(slow_add(2, 2))
+    print(slow_add(3, 3))
+    print(slow_add(4, 4))
+```
+
+# repr and birthday
+```python
+#!/usr/bin/env python3
+"""Example of a decorator that both modifies __repr__ on a class, and
+sets the _created_at attribute on all new objects created by that class.
+
+From Reuven Lerner's "Practical Decorators" talk at PyCon 2019.
+Reuven's courses, books, and newsletter are at https://lerner.co.il/
+https://youtu.be/MjHpMCIvwsY
+"""
+
+
+import time
+
+
+def fancy_repr(self):
+    return f"I'm a {type(self).__name__}, with vars {vars(self)}"
+
+
+def repr_and_birthday(c):
+    c.__repr__ = fancy_repr
+
+    def wrapper(*args, **kwargs):
+        o = c(*args, **kwargs)
+        o._created_at = time.time()
+        return o
+    return wrapper
+
+
+if __name__ == '__main__':
+    @repr_and_birthday
+    class Foo():
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+    f = Foo(10, [10, 20, 30])
+    print(f)
+    print(f._created_at)
+```
