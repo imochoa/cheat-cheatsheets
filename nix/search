@@ -1,0 +1,42 @@
+
+# Should you use nix flake show or nix search?
+A good rule of thumb is to always use nix search with Nixpkgs and to initially use nix flake show with other flakes. 
+If the package outputs for nix flake show are big enough to be tricky to navigate, use nix search for that flake instead.
+
+nix search [option...] installable regex...
+
+# Show all packages in the flake in the current directory:
+nix search
+
+# Show all packages in the nixpkgs flake
+nix search nixpkgs
+
+# Show packages in the nixpkgs flake containing blender in its name or description:
+nix search nixpkgs blender
+
+# Search with regex expression
+nix search nixpkgs "python310Packages.dask$"
+
+# Search for packages underneath the gnome3 flake output attribute in Nixpkgs:
+nix search "nixpkgs#gnome3" vala
+
+nix shell "nixpkgs#python310Packages.dask"
+
+THE QUOTES ARE IMPORTANT
+
+# If no flake output attribute is given, nix search searches for packages:
+# · Directly underneath packages.<system>.
+# · Underneath legacyPackages.<system>, recursing into attribute sets that contain an attribute recurseForDerivations =
+#   true.
+ 
+
+# Search for Firefox or Chromium:
+nix search nixpkgs 'firefox|chromium'
+
+# Search for packages containing git and either frontend or gui:
+nix search nixpkgs git 'frontend|gui'
+
+# Search for packages containing neovim but hide ones containing either gui or python:
+nix search nixpkgs neovim --exclude 'python|gui'
+# or
+nix search nixpkgs neovim --exclude 'python' --exclude 'gui'

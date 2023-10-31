@@ -3,6 +3,13 @@ syntax: bash
 tags: [ search, files ]
 ---
 
+
+--multiline -U # Multi-line matching
+
+Using that approach, '.' does not match '\n'. To fix that, you can either:
+ - Use '--multiline-dotall'
+ - use the regex "dot all" modifier: "(?s)theActualRegexMatch"
+
 # start detached
 
 -l, --files-with-matches

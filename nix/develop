@@ -1,0 +1,5 @@
+# Local env
+nix develop
+
+# With flake reference
+nix develop "github:DeterminateSystems/zero-to-nix#example"

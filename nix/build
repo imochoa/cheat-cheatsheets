@@ -3,13 +3,50 @@ syntax: bash
 tags: [ nix, dev ]
 ---
 
-# For `default.nix`
-nix-build
+# Building Flakes
 
-# For `flake.nix`
-nix build
+## For `flake.nix`
+nix build 
 
-# Specific package
+### Options
+# --print-build-logs -L | very useful for debugging
+# --show-trace | 
+# --debugger | start debugger if failed
+
+
+# With debugger
+nix build --debug
+
+### Specific package
 nix build .#docker
 
+
+
+# Update
+## See versions
+nix flake metadata
+
+nix flake update --commit-lock-file
+
+## Update specific ones
+nix flake lock --update-input nixpkgs --update-input nix
+
+# Format
+nix-shell --run "nixpkgs-fmt ."
+
+
+# For non-flake
+`nix-build`
+
+## [From nixpkgs](https://elatov.github.io/2022/01/building-a-nix-package/)
+Can't build it directly:
+```
+nix-build default.nix
+error: cannot auto-call a function that has an argument without a default value ('lib')
+```
+You need to import `nixpkgs` first:
+```
+nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
+```
+> The command changes a bit for QT applications, see URL
 
