@@ -2,6 +2,11 @@
 syntax: markdown
 tags: [ ssh ]
 ---
+
+suffixes:
+`.pem` for private keys
+`.pub` for public keys
+
 # Correct permissions for keys
 sudo chmod 700 ~/.ssh
 sudo chmod 644 ~/.ssh/id_example.pub
@@ -19,6 +24,21 @@ $ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 
 
-
 # Put something from a remote server into your machine
 ssh -L 27017:localhost:27017 ignacio@spandev
+
+# Mounting a remote file system using sshfs
+```
+# Install if required
+sudo apt install sshfs
+
+# Create the target dir (does not have to be under /mnt)
+sudo mkdir <local path>
+# e.g. sudo mkdir /mnt/target
+
+# Mount!
+sudo sshfs -o allow_other,default_permissions <user>@<host>:<remote path> <local path>
+```
+> without requiring sudo permissions:
+> you can create a user group called fuse on your local machine, by using `sudo groupadd fuse`
+> then adding your local user to that group `sudo usermod -a -G fuse $USER`

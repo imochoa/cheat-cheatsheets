@@ -1,0 +1,173 @@
+
+
+When you pipe the results of find to parallel, each item on each line is treated as one argument to the command that parallel is arbitrating. If, on the other hand, you need to process more than one argument in one command, you can split up the way the data in the queue is handed over to parallel.
+
+
+
+
+find . -name "*jpeg" | parallel -I% --max-args 1 convert % %.png
+
+-I% creates a placeholder, called %, to stand in for whatever find hands over to Parallel.
+You use this because otherwise you'd have to manually write a new command for each result of find, and that's exactly what you're trying to avoid.
+
+--max-args 1 limits the rate at which Parallel requests a new object from the queue
+Since the command Parallel is running requires only one file, you limit the rate to 1.
+Were you doing a more complex command that required two files (such as cat 001.txt 002.txt > new.txt), you would limit the rate to 2.
+
+convert % %.png is the command you want to run in Parallel.
+
+
+
+Multiple Arguments
+Now tell Parallel you want to get two objects per job:
+
+$ ls -1 | parallel --max-args=2 echo
+ada lovelace
+richard stallman
+
+
+
+
+All this fancy input and output parsing isn't to everyone's taste. If you prefer a more direct approach, you can throw commands at Parallel and walk away.
+
+First, create a text file with one command on each line:
+
+$ cat jobs2run
+bzip2 oldstuff.tar
+oggenc music.flac
+opusenc ambiance.wav
+convert bigfile.tiff small.jpeg
+ffmepg -i foo.avi -v:b 12000k foo.mp4
+xsltproc --output build/tmp.fo style/dm.xsl src/tmp.xml
+bzip2 archive.tar
+
+Then hand the file over to Parallel:
+
+$ parallel --jobs 6 < jobs2run
+
+
+
+
+
+
+
+
+
+One of the most common ways is using ::: to separate your command from your inputs. The inputs can either be a list separated by spaces, or a range using brace expansions, or a list that is generated using wildcards:
+
+# Echo 3 different file names
+parallel echo ::: A.txt B.txt C.txt
+
+# Echo numbers 1-20
+parallel echo ::: {1..20}
+
+# Echo all .txt files in the current directory
+parallel echo ::: *.txt
+
+    Note: ::: is the default argument separator but this can be changed using the --arg-file-sep flag.
+
+
+If the order of the output is important, you could just sort it after everything has completed. Alternatively, you can force GNU parallel to print the output in the order of the input values using the --keep-order/-k 
+
+
+
+# Keep the entire input using {}
+parallel echo {} ::: mydir/mysubdir/myfile.myext
+# Prints: mydir/mysubdir/myfile.myext
+
+# Strip the file extension using {.}
+parallel echo {.} ::: mydir/mysubdir/myfile.myext
+# Prints: mydir/mysubdir/myfile
+
+# Strip the path to the file {/}
+parallel echo {/} ::: mydir/mysubdir/myfile.myext
+# Prints: myfile.myext
+
+# Strip both the path and file extension using {/.}
+parallel echo {/.} ::: mydir/mysubdir/myfile.myext
+# Prints: myfile
+
+# Keep only the path to the file (strip the file and extension) using {//}
+parallel echo {//} ::: mydir/mysubdir/myfile.myext
+# Prints: mydir/mysubdir
+
+
+# Convert .txt files to .csv
+parallel mv {} {.}.csv ::: *.txt
+
+-j
+
+
+
+# Convert tab separated files to csv files
+parallel "tr '\t' ',' < {} > {.}.csv" ::: *.tsv
+
+# Find files with the extension .bam and gzip those files in parallel
+find . -type f -name '*.bam' -print | parallel gzip
+
+# Run some summary stats on bam files in parallel across 8 CPUs with the samtools flagstat command
+parallel -j 8 'samtools flagstat {} > {.}.stat' ::: *.bam
+
+# Run myscript.sh with values 1 through to 100 as input
+parallel ./myscript.sh ::: {1..100} #script uses command line arguments
+# OR
+parallel "echo {} | ./myscript.sh" ::: {1..100} #script uses stdin
+# Note: for these commands to work you will need to make sure myscript.sh can accept/handle the right type of inputs and also ensure myscript.sh is executable (otherwise use "bash ./myscript.sh")
+
+You can find a lot of other examples in the GNU parallel manual
+
+
+
+https://blog.ronin.cloud/gnu-parallel/
+
+Book:
+
+Example files:
+```bash
+# If your system does not have 'seq', replace 'seq' with 'jot'
+seq 5 | parallel seq {} '>' example.{}
+```
+
+# 2.1 Input sources
+
+## Command line
+```bash
+parallel echo ::: 1 2 3 4 5
+```
+> 1
+> 2
+> 3
+> 4
+> 5
+
+If you give multiple :::s, GNU Parallel will generate all combinations:
+```bash
+parallel echo ::: S M L ::: Green Red
+```
+> S Green
+> S Red
+> M Green
+> M Red
+> L Green
+> L Red
+
+## Stdin
+```bash
+find example.* -print | parallel echo File
+```
+> File example.1
+> File example.2
+> File example.3
+> File example.4
+> File example.5
+
+# 2.2 Build the command
+
+You can chain multiple commands escaping `;`
+```bash
+parallel echo counting lines';' wc -l ::: example.*
+```
+
+The value will normally be appended to the command but can be placed anywhere by using the
+replacement string {}:
+parallel echo counting {}';' wc -l {} ::: example.*

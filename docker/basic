@@ -8,6 +8,15 @@ docker run -ti <image-name> /bin/bash
 # Run & mount SSH
 docker run --rm -it -v "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK" -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK <image-name>
 
+# Run with security power
+# https://stackoverflow.com/questions/19215177/how-to-solve-ptrace-operation-not-permitted-when-trying-to-attach-gdb-to-a-pro
+# https://stackoverflow.com/questions/35987982/process-is-in-interruptible-sleep-how-to-find-out-what-it-is-waiting-for
+```bash
+docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --security-opt apparmor=unconfined <image-name>
+# or perhaps
+docker run -it --rm --privileged --pid=host <imgname>
+```
+
 # To "shell" into a running container (docker-1.3+):
 docker exec -ti <container-name> bash
 

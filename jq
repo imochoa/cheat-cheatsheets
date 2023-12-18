@@ -1,3 +1,8 @@
+---
+syntax: bash
+tags: [ cli ]
+---
+
 # Manual 
 'https://stedolan.github.io/jq/manual/'
 

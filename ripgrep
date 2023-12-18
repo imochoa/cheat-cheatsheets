@@ -3,7 +3,6 @@ syntax: bash
 tags: [ search, files ]
 ---
 
-
 --multiline -U # Multi-line matching
 
 Using that approach, '.' does not match '\n'. To fix that, you can either:

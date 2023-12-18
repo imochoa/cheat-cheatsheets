@@ -1,0 +1,68 @@
+#
+# https://linux.die.net/man/1/ps
+#
+# To list every process on the system:
+ps aux
+NOT THE SAME AS `ps -aux`, WHICH SHOULD NOT BE USED!
+
+# To list a process tree:
+ps axjf
+
+# To list every process owned by foouser:
+ps -aufoouser
+
+# To list every process with a user-defined format:
+ps -eo pid,user,command
+
+# Exclude grep from your grepped output of ps.
+# Add [] to the first letter. Ex: sshd -> [s]shd
+ps aux | grep '[h]ttpd'
+
+
+To see every process on the system using standard syntax:
+    ps -e
+    ps -ef
+    ps -eF
+    ps -ely 
+To see every process on the system using BSD syntax:
+    ps ax
+    ps axu 
+To print a process tree:
+    ps -ejH
+    ps axjf 
+To get info about threads:
+    ps -eLf
+    ps axms 
+To get security info:
+    ps -eo euser,ruser,suser,fuser,f,comm,label
+    ps axZ
+    ps -eM 
+To see every process running as root (real & effective ID) in user format:
+    ps -U root -u root u 
+To see every process with a user-defined format:
+    ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
+    ps axo stat,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm
+    ps -eopid,tt,user,fname,tmout,f,wchan 
+Print only the process IDs of syslogd:
+    ps -C syslogd -o pid= 
+Print only the name of PID 42:
+    ps -p 42 -o comm=
+
+# STAT: Process State Codes
+
+Here are the different values that the s, stat and state output specifiers (header "STAT" or "S") will display to describe the state of a process.
+- `D`: Uninterruptible sleep (usually IO)
+- `R`: Running or runnable (on run queue)
+- `S`: Interruptible sleep (waiting for an event to complete)
+- `T`: Stopped, either by a job control signal or because it is being traced.
+- `W`: paging (not valid since the 2.6.xx kernel)
+- `X`: dead (should never be seen)
+- `Z`: Defunct ("zombie") process, terminated but not reaped by its parent. 
+
+For BSD formats and when the stat keyword is used, additional characters may be displayed:
+- `<`: high-priority (not nice to other users)
+- `N`: low-priority (nice to other users)
+- `L`: has pages locked into memory (for real-time and custom IO)
+- `s`: is a session leader
+- `l`: is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
+- `+`: is in the foreground process group

@@ -1,0 +1,14 @@
+---
+syntax: bash
+tags: [ cli, encoding ]
+---
+
+# Encode string
+echo -n 'my-string' | base64
+# Encode file
+base64 /path/to/file > output.txt
+
+# Decode string
+echo -n 'bXktc3RyaW5n' | base64 --decode
+# Decode file
+base64 --decode /path/to/file > output.txt
